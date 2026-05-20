@@ -14,7 +14,7 @@ global stack
 global strlen
 
 section .bss
-    buf         resb    20
+    buf         resd    20
 
 section .text   
 
@@ -36,7 +36,6 @@ strlen:
 conv_in_digit_num:              ; convert num line into one number
         push ebp
         mov ebp, esp
-        push ecx
         mov eax, [ebp+8]
 
         mov dword [buf], eax
@@ -65,17 +64,15 @@ loop .cmp_lp
         mul bh
 loop .mul_lp        
         pop ecx
-        xor eax, eax
 
-        xor al, al
+        xor eax, eax
         push ecx
 .sum_lp:
-        add eax, dword [buf+ecx-1]
+        add al, byte [buf+ecx-1]
 loop .sum_lp
         pop ecx
 
-.quit:  pop ecx                 ; eax contains the result 
-        mov esp, ebp            
+.quit:  mov esp, ebp          ; eax contains the result             
         pop ebp
         ret
 
@@ -87,9 +84,9 @@ conv_in_line:                   ; convert a number into line
         push esi
         mov eax, [ebp+8]
         
-        mov ecx, 2              ;не надо считать длину специальной функцией потому что число одно 
+        mov ecx, 3              
         mov eax, [ebp+8]
-        mov ebx, 10
+        mov ebx, 100
         mov esi, 0
 .div_lp:
         xor edx, edx  
@@ -98,7 +95,6 @@ conv_in_line:                   ; convert a number into line
         push ebx
         mov dword [buf+esi], eax
         add dword [buf+esi], 48 
-        kernel SYS_WRITE, STDOUT, buf, 1
         pop ebx
 
         mov eax, edx
@@ -115,7 +111,7 @@ conv_in_line:                   ; convert a number into line
         
 loop .div_lp
 
-        mov eax, buf
+        mov eax, dword [buf]
 
 .quit:  pop esi         ; eax contains the result
         pop ecx                  

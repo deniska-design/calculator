@@ -30,25 +30,26 @@ section .data
         len_nl equ $-nl
 
 section .bss
-    buf          resb    20
-    num1         resb    20
-    num2         resb    20
-    operation    resb    1
+    buf          resd    20
+    res          resd    20
+    num1         resd    4
+    num2         resd    4
+    operation    resd    4
 
     
 section .text
 _start: 
     kernel SYS_WRITE, STDOUT, msg_num1, len_num1
-    kernel SYS_READ, STDIN, num1, 20
-    function conv_in_digit_num, dword [num1]
+    kernel SYS_READ, STDIN, num1, 4
+    function conv_in_digit_num, dword [num1]        ;need fix
     mov dword [num1], eax
 
     kernel SYS_WRITE, STDOUT, msg_op, len_op
-    kernel SYS_READ, STDIN, operation, 20
+    kernel SYS_READ, STDIN, operation, 4
 
     kernel SYS_WRITE, STDOUT, msg_num2, len_num2
-    kernel SYS_READ, STDIN, num2, 20
-    function conv_in_digit_num, dword [num2]
+    kernel SYS_READ, STDIN, num2, 4
+    function conv_in_digit_num, dword [num2]        ;need fix
     mov dword [num2], eax
 
     xor edx, edx
@@ -81,16 +82,10 @@ _start:
     jmp .pr_res
 
 .pr_res:
-    mov dword [buf], 15
+    mov dword [buf], eax
     function conv_in_line, dword [buf]
-    ;mov dword [buf], eax
-    ;kernel SYS_WRITE, STDOUT, buf, 3
-    ;kernel SYS_WRITE, STDOUT, nl, len_nl
-
-    ;add eax, 48
-    ;mov dword [buf], eax
-    ;kernel SYS_WRITE, STDOUT, buf, 1
-    ;kernel SYS_WRITE, STDOUT, nl, len_nl
-
+    mov dword [res], eax
+    kernel SYS_WRITE, STDOUT, res, 3
+    kernel SYS_WRITE, STDOUT, nl, len_nl
 .quit:
     kernel SYS_EXIT, 0
