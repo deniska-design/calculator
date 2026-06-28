@@ -31,7 +31,7 @@ git clone https://github.com/deniska-design/calculator.git
 cd calculator
 ```
 
-2. Execution
+2. Start
    
 ```
 ./my_program
