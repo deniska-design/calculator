@@ -39,12 +39,12 @@ cd calculator
 
 ---
 
-Usage
+Execution:
 
 <img width="868" height="502" alt="image" src="https://github.com/user-attachments/assets/90b4990c-57a4-43d0-ac78-128f1cdfebd3" />
 
 
 ---
 
-License
+License:
 This project is open-source. Anyone is completely free to download, modify, use, and distribute this software for personal or educational purposes.
